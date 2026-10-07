@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CodeCoach AI</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            font-family:
+                    Arial,
+                    Helvetica,
+                    sans-serif;
+
+            min-height: 100vh;
+
+            color: #ffffff;
+
+            background:
+                    radial-gradient(
+                            circle at 10% 15%,
+                            rgba(99,102,241,.22),
+                            transparent 28%
+                    ),
+                    radial-gradient(
+                            circle at 90% 20%,
+                            rgba(168,85,247,.20),
+                            transparent 30%
+                    ),
+                    radial-gradient(
+                            circle at 50% 90%,
+                            rgba(59,130,246,.16),
+                            transparent 30%
+                    ),
+                    #070b18;
+
+            overflow-x: hidden;
+        }
+
+
+        /* ================= BACKGROUND ================= */
+
+        .background-glow {
+
+            position: fixed;
+
+            width: 400px;
+            height: 400px;
+
+            border-radius: 50%;
+
+            filter: blur(110px);
+
+            opacity: .25;
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+
+        .glow-1 {
+
+            background: #6366f1;
+
+            left: -200px;
+
+            top: 100px;
+        }
+
+
+        .glow-2 {
+
+            background: #a855f7;
+
+            right: -200px;
+
+            top: 450px;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+
+            width: 92%;
+
+            max-width: 1200px;
+
+            margin: 22px auto;
+
+            padding: 17px 24px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            border-radius: 18px;
+
+            background:
+                    rgba(255,255,255,.07);
+
+            border:
+                    1px solid
+                    rgba(255,255,255,.12);
+
+            backdrop-filter:
+                    blur(20px);
+
+            box-shadow:
+                    0 15px 50px
+                    rgba(0,0,0,.25);
+
+            position: relative;
+
+            z-index: 10;
+        }
+
+
+        .logo {
+
+            font-size: 23px;
+
+            font-weight: 700;
+
+            letter-spacing: -.5px;
+        }
+
+
+        .logo span {
+
+            background:
+                    linear-gradient(
+                            90deg,
+                            #60a5fa,
+                            #a78bfa,
+                            #c084fc
+                    );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .nav-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+        }
+
+
+        .nav-text {
+
+            color: #9ca9c5;
+
+            font-size: 14px;
+        }
+
+
+        .nav-register {
+
+            padding: 9px 17px;
+
+            border-radius: 9px;
+
+            color: white;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #4f46e5,
+                            #7c3aed
+                    );
+
+            border:
+                    1px solid
+                    rgba(255,255,255,.12);
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: .3s ease;
+        }
+
+
+        .nav-register:hover {
+
+            transform:
+                    translateY(-2px);
+
+            box-shadow:
+                    0 8px 25px
+                    rgba(99,102,241,.4);
+        }
+
+
+        /* ================= HERO ================= */
+
+        .hero {
+
+            min-height: 620px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding:
+                    80px 20px 60px;
+        }
+
+
+        .hero-content {
+
+            max-width: 900px;
+
+            animation:
+                    fadeUp 1s ease;
+        }
+
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                        translateY(30px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                        translateY(0);
+            }
+        }
+
+
+        /* ================= BADGE ================= */
+
+        .badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            padding: 9px 17px;
+
+            border-radius: 50px;
+
+            background:
+                    rgba(99,102,241,.12);
+
+            border:
+                    1px solid
+                    rgba(129,140,248,.30);
+
+            color: #c7d2fe;
+
+            font-size: 14px;
+
+            margin-bottom: 28px;
+
+            box-shadow:
+                    0 0 30px
+                    rgba(99,102,241,.12);
+        }
+
+
+        .dot {
+
+            width: 8px;
+
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #818cf8;
+
+            box-shadow:
+                    0 0 14px
+                    #818cf8;
+
+            animation:
+                    pulse 2s infinite;
+        }
+
+
+        @keyframes pulse {
+
+            0%,100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .4;
+            }
+        }
+
+
+        /* ================= HEADING ================= */
+
+        .hero h1 {
+
+            font-size:
+                    clamp(45px, 7vw, 78px);
+
+            line-height: 1.05;
+
+            letter-spacing: -3px;
+
+            margin-bottom: 28px;
+        }
+
+
+        .gradient-text {
+
+            background:
+                    linear-gradient(
+                            90deg,
+                            #60a5fa,
+                            #818cf8,
+                            #c084fc,
+                            #60a5fa
+                    );
+
+            background-size: 250% auto;
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            animation:
+                    gradientMove 5s
+                    linear infinite;
+        }
+
+
+        @keyframes gradientMove {
+
+            from {
+                background-position:
+                        0% center;
+            }
+
+            to {
+                background-position:
+                        250% center;
+            }
+        }
+
+
+        .hero-description {
+
+            max-width: 700px;
+
+            margin: auto;
+
+            color: #9ca9c5;
+
+            font-size: 18px;
+
+            line-height: 1.8;
+
+            margin-bottom: 38px;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+
+        button {
+
+            border: none;
+
+            padding: 15px 28px;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: .3s ease;
+        }
+
+
+        .primary {
+
+            color: white;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #4f46e5,
+                            #7c3aed
+                    );
+
+            box-shadow:
+                    0 10px 35px
+                    rgba(99,102,241,.35);
+        }
+
+
+        .primary:hover {
+
+            transform:
+                    translateY(-4px);
+
+            box-shadow:
+                    0 18px 45px
+                    rgba(99,102,241,.55);
+        }
+
+
+        .secondary {
+
+            color: #e2e8f0;
+
+            background:
+                    rgba(255,255,255,.06);
+
+            border:
+                    1px solid
+                    rgba(255,255,255,.15);
+
+            backdrop-filter:
+                    blur(10px);
+        }
+
+
+        .secondary:hover {
+
+            transform:
+                    translateY(-4px);
+
+            background:
+                    rgba(255,255,255,.11);
+
+            border-color:
+                    rgba(255,255,255,.3);
+        }
+
+
+        /* ================= FEATURES ================= */
+
+        .features {
+
+            width: 92%;
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                    repeat(3, 1fr);
+
+            gap: 20px;
+
+            padding:
+                    20px 0 90px;
+        }
+
+
+        .card {
+
+            position: relative;
+
+            padding: 30px;
+
+            min-height: 210px;
+
+            border-radius: 22px;
+
+            background:
+                    linear-gradient(
+                            145deg,
+                            rgba(255,255,255,.09),
+                            rgba(255,255,255,.035)
+                    );
+
+            border:
+                    1px solid
+                    rgba(255,255,255,.10);
+
+            backdrop-filter:
+                    blur(18px);
+
+            overflow: hidden;
+
+            transition: .35s ease;
+        }
+
+
+        .card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 130px;
+
+            height: 130px;
+
+            right: -70px;
+
+            top: -70px;
+
+            border-radius: 50%;
+
+            background: #6366f1;
+
+            filter: blur(55px);
+
+            opacity: .2;
+        }
+
+
+        .card:hover {
+
+            transform:
+                    translateY(-9px);
+
+            border-color:
+                    rgba(129,140,248,.4);
+
+            box-shadow:
+                    0 25px 60px
+                    rgba(0,0,0,.35);
+        }
+
+
+        .icon {
+
+            width: 50px;
+
+            height: 50px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            rgba(99,102,241,.25),
+                            rgba(168,85,247,.2)
+                    );
+
+            border:
+                    1px solid
+                    rgba(255,255,255,.1);
+
+            font-size: 23px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .card h3 {
+
+            font-size: 19px;
+
+            margin-bottom: 11px;
+        }
+
+
+        .card p {
+
+            color: #8996b3;
+
+            line-height: 1.65;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= CTA ================= */
+
+        .cta {
+
+            width: 92%;
+
+            max-width: 900px;
+
+            margin:
+                    0 auto 80px;
+
+            text-align: center;
+
+            padding: 60px 30px;
+
+            border-radius: 28px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            rgba(79,70,229,.15),
+                            rgba(124,58,237,.12)
+                    );
+
+            border:
+                    1px solid
+                    rgba(129,140,248,.2);
+
+            box-shadow:
+                    inset 0 0 60px
+                    rgba(99,102,241,.05);
+        }
+
+
+        .cta h2 {
+
+            font-size: 30px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .cta p {
+
+            color: #8f9bb5;
+
+            margin-bottom: 27px;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            text-align: center;
+
+            padding: 28px;
+
+            border-top:
+                    1px solid
+                    rgba(255,255,255,.08);
+
+            color: #68758f;
+
+            font-size: 13px;
+        }
+
+
+        /* ================= LOGIN MODAL ================= */
+
+        .modal {
+
+            position: fixed;
+
+            inset: 0;
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    rgba(0,0,0,.7);
+
+            backdrop-filter:
+                    blur(8px);
+
+            z-index: 100;
+        }
+
+
+        .modal.active {
+
+            display: flex;
+        }
+
+
+        .modal-box {
+
+            width: 92%;
+
+            max-width: 430px;
+
+            padding: 35px;
+
+            border-radius: 24px;
+
+            background:
+                    linear-gradient(
+                            145deg,
+                            #11182d,
+                            #0b1020
+                    );
+
+            border:
+                    1px solid
+                    rgba(255,255,255,.12);
+
+            box-shadow:
+                    0 30px 100px
+                    rgba(0,0,0,.6);
+
+            animation:
+                    modalIn .3s ease;
+        }
+
+
+        @keyframes modalIn {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                        scale(.9);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                        scale(1);
+            }
+        }
+
+
+        .modal-box h2 {
+
+            margin-bottom: 8px;
+        }
+
+
+        .modal-subtitle {
+
+            color: #8996b3;
+
+            font-size: 14px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .input {
+
+            width: 100%;
+
+            padding: 14px 15px;
+
+            margin-bottom: 14px;
+
+            border-radius: 11px;
+
+            border:
+                    1px solid
+                    rgba(255,255,255,.12);
+
+            outline: none;
+
+            background:
+                    rgba(255,255,255,.06);
+
+            color: white;
+
+            font-size: 14px;
+        }
+
+
+        .input:focus {
+
+            border-color: #818cf8;
+
+            box-shadow:
+                    0 0 0 3px
+                    rgba(99,102,241,.12);
+        }
+
+
+        .modal-buttons {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 10px;
+        }
+
+
+        .modal-buttons button {
+
+            flex: 1;
+        }
+
+
+        .close {
+
+            background:
+                    rgba(255,255,255,.06);
+
+            color: #cbd5e1;
+
+            border:
+                    1px solid
+                    rgba(255,255,255,.1);
+        }
+
+
+        /* ================= LOGIN STATUS ================= */
+
+        .login-message {
+
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 11px;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            font-size: 13px;
+        }
+
+
+        .login-message.success {
+
+            display: block;
+
+            color: #86efac;
+
+            background:
+                    rgba(34,197,94,.10);
+
+            border:
+                    1px solid
+                    rgba(34,197,94,.25);
+        }
+
+
+        .login-message.error {
+
+            display: block;
+
+            color: #fca5a5;
+
+            background:
+                    rgba(239,68,68,.10);
+
+            border:
+                    1px solid
+                    rgba(239,68,68,.25);
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 800px) {
+
+            nav {
+
+                width: 94%;
+            }
+
+
+            .nav-text {
+
+                display: none;
+            }
+
+
+            .nav-right {
+
+                gap: 8px;
+            }
+
+
+            .hero {
+
+                min-height: 570px;
+
+                padding-top: 60px;
+            }
+
+
+            .hero h1 {
+
+                letter-spacing: -2px;
+            }
+
+
+            .hero-description {
+
+                font-size: 16px;
+            }
+
+
+            .features {
+
+                grid-template-columns: 1fr;
+
+                max-width: 500px;
+            }
+
+
+            .cta {
+
+                margin-bottom: 60px;
+            }
+        }
+
+
+        @media (max-width: 450px) {
+
+            nav {
+
+                padding:
+                        15px 18px;
+            }
+
+
+            .logo {
+
+                font-size: 20px;
+            }
+
+
+            .nav-register {
+
+                padding:
+                        8px 12px;
+
+                font-size: 12px;
+            }
+
+
+            .hero h1 {
+
+                font-size: 45px;
+            }
+
+
+            .buttons {
+
+                flex-direction: column;
+            }
+
+
+            .buttons button {
+
+                width: 100%;
+
+                max-width: 260px;
+            }
+
+
+            .modal-box {
+
+                padding:
+                        28px 22px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= BACKGROUND ================= -->
+
+<div class="background-glow glow-1"></div>
+
+<div class="background-glow glow-2"></div>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <div class="logo">
+
+        CodeCoach <span>AI</span>
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <div class="nav-text">
+
+            AI Coding Interview Platform
+
+        </div>
+
+
+        <button
+                class="nav-register"
+                onclick="openRegister()">
+
+            Register
+
+        </button>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+
+        <div class="badge">
+
+            <span class="dot"></span>
+
+            AI-Powered Coding Practice
+
+        </div>
+
+
+        <h1>
+
+            Become a Better
+
+            <span class="gradient-text">
+
+                Developer.
+
+            </span>
+
+        </h1>
+
+
+        <p class="hero-description">
+
+            Practice coding problems, prepare for
+            technical interviews, and improve your
+            programming skills with
+            <strong>CodeCoach AI.</strong>
+
+        </p>
+
+
+        <div class="buttons">
+
+
+            <button
+                    class="primary"
+                    onclick="startPractice()">
+
+                🚀 Start Practice
+
+            </button>
+
+
+            <button
+                    class="secondary"
+                    onclick="openLogin()">
+
+                🔐 Login
+
+            </button>
+
+
+            <button
+                    class="secondary"
+                    onclick="openRegister()">
+
+                ✨ Create Account
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+
+<section class="features">
+
+
+    <div class="card">
+
+        <div class="icon">
+
+            💻
+
+        </div>
+
+
+        <h3>
+
+            Coding Practice
+
+        </h3>
+
+
+        <p>
+
+            Solve programming problems and build
+            strong problem-solving skills through
+            consistent practice.
+
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="icon">
+
+            🤖
+
+        </div>
+
+
+        <h3>
+
+            AI Feedback
+
+        </h3>
+
+
+        <p>
+
+            Get intelligent feedback on your coding
+            approach and understand how to improve
+            your solutions.
+
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="icon">
+
+            📊
+
+        </div>
+
+
+        <h3>
+
+            Track Progress
+
+        </h3>
+
+
+        <p>
+
+            Monitor your practice history, scores
+            and improvement as you become a
+            stronger developer.
+
+        </p>
+
+    </div>
+
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta">
+
+    <h2>
+
+        Ready to level up your coding?
+
+    </h2>
+
+
+    <p>
+
+        Create your account and start building
+        your developer skills today.
+
+    </p>
+
+
+    <button
+            class="primary"
+            onclick="openRegister()">
+
+        Create Account 🚀
+
+    </button>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    © 2026 CodeCoach AI
+    • Built for Developers
+
+</footer>
+
+
+<!-- ================= LOGIN MODAL ================= -->
+
+<div
+        class="modal"
+        id="loginModal">
+
+
+    <div class="modal-box">
+
+
+        <h2>
+
+            Welcome Back 👋
+
+        </h2>
+
+
+        <p class="modal-subtitle">
+
+            Login to your CodeCoach AI account
+
+        </p>
+
+
+        <!-- EMAIL -->
+
+        <input
+                class="input"
+                type="email"
+                id="loginEmail"
+                placeholder="Email address"
+                autocomplete="email">
+
+
+        <!-- PASSWORD -->
+
+        <input
+                class="input"
+                type="password"
+                id="loginPassword"
+                placeholder="Password"
+                autocomplete="current-password">
+
+
+        <!-- BUTTONS -->
+
+        <div class="modal-buttons">
+
+
+            <button
+                    class="primary"
+                    id="loginButton"
+                    onclick="loginUser()">
+
+                Login 🚀
+
+            </button>
+
+
+            <button
+                    class="close"
+                    onclick="closeLogin()">
+
+                Close
+
+            </button>
+
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <div
+                id="loginMessage"
+                class="login-message">
+        </div>
+
+
+        <!-- REGISTER -->
+
+        <p style="
+            color:#8996b3;
+            font-size:13px;
+            text-align:center;
+            margin-top:18px;
+        ">
+
+            Don't have an account?
+
+
+            <span
+                    onclick="openRegister()"
+                    style="
+                        color:#818cf8;
+                        cursor:pointer;
+                        font-weight:600;
+                    ">
+
+                Register
+
+            </span>
+
+        </p>
+
+
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+
+    /* =========================
+       START PRACTICE
+    ========================= */
+
+    function startPractice() {
+
+        window.location.href =
+            "/login.html";
+
+    }
+
+
+    /* =========================
+       OPEN LOGIN
+    ========================= */
+
+    function openLogin() {
+
+        document
+            .getElementById("loginModal")
+            .classList.add("active");
+
+    }
+
+
+    /* =========================
+       CLOSE LOGIN
+    ========================= */
+
+    function closeLogin() {
+
+        document
+            .getElementById("loginModal")
+            .classList.remove("active");
+
+    }
+
+
+    /* =========================
+       OPEN REGISTER
+    ========================= */
+
+    function openRegister() {
+
+        window.location.href =
+            "/register.html";
+
+    }
+
+
+    /* =========================
+       LOGIN API
+    ========================= */
+
+    async function loginUser() {
+
+
+        const email =
+            document
+                .getElementById("loginEmail")
+                .value
+                .trim();
+
+
+        const password =
+            document
+                .getElementById("loginPassword")
+                .value;
+
+
+        const message =
+            document
+                .getElementById("loginMessage");
+
+
+        const button =
+            document
+                .getElementById("loginButton");
+
+
+        /* VALIDATION */
+
+        if (!email || !password) {
+
+            message.className =
+                "login-message error";
+
+            message.innerText =
+                "❌ Please enter email and password.";
+
+            return;
+
+        }
+
+
+        /* LOADING */
+
+        button.disabled = true;
+
+        button.innerText =
+            "Logging in...";
+
+
+        message.className =
+            "login-message";
+
+        message.innerText =
+            "";
+
+
+        try {
+
+
+            /* =========================
+               SPRING BOOT API
+            ========================= */
+
+            const response =
+                await fetch(
+                    "/api/users/login",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                email:
+                                email,
+
+                                password:
+                                password
+
+                            })
+
+                    }
+                );
+
+
+            const data =
+                await response.text();
+
+
+            /* =========================
+               SUCCESS
+            ========================= */
+
+            if (response.ok) {
+
+
+                message.className =
+                    "login-message success";
+
+
+                message.innerText =
+                    "✅ Login successful!";
+
+
+                button.innerText =
+                    "Welcome ✓";
+
+
+                /*
+                 * Dashboard redirect
+                 */
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "/dashboard.html";
+
+                    },
+                    800
+                );
+
+            }
+
+
+            /* =========================
+               LOGIN FAILED
+            ========================= */
+
+            else {
+
+
+                message.className =
+                    "login-message error";
+
+
+                message.innerText =
+                    "❌ " + data;
+
+
+                button.disabled =
+                    false;
+
+
+                button.innerText =
+                    "Login 🚀";
+
+            }
+
+        }
+
+
+            /* =========================
+               SERVER ERROR
+            ========================= */
+
+        catch (error) {
+
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+
+            message.className =
+                "login-message error";
+
+
+            message.innerText =
+                "❌ Server se connection nahi ho paaya.";
+
+
+            button.disabled =
+                false;
+
+
+            button.innerText =
+                "Login 🚀";
+
+        }
+
+    }
+
+
+    /* =========================
+       CLOSE MODAL ON BACKGROUND
+    ========================= */
+
+    document
+        .getElementById("loginModal")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === this
+                ) {
+
+                    closeLogin();
+
+                }
+
+            }
+        );
+
+
+    /* =========================
+       ENTER KEY LOGIN
+    ========================= */
+
+    document
+        .getElementById("loginPassword")
+        .addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    loginUser();
+
+                }
+
+            }
+        );
+
+</script>
+
+
+</body>
+
+</html>

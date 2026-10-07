@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    ```
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Two Sum | CodeCoach AI</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+            min-height: 100vh;
+
+            color: white;
+
+            background:
+                    radial-gradient(
+                            circle at 10% 10%,
+                            rgba(99,102,241,.18),
+                            transparent 25%
+                    ),
+                    radial-gradient(
+                            circle at 90% 80%,
+                            rgba(168,85,247,.16),
+                            transparent 25%
+                    ),
+                    #070b18;
+        }
+
+        nav {
+            width: 94%;
+            max-width: 1250px;
+
+            margin: 20px auto;
+
+            padding: 17px 24px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            border-radius: 18px;
+
+            background: rgba(255,255,255,.06);
+
+            border: 1px solid rgba(255,255,255,.10);
+
+            backdrop-filter: blur(20px);
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        .logo span {
+            background:
+                    linear-gradient(
+                            90deg,
+                            #60a5fa,
+                            #818cf8,
+                            #c084fc
+                    );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .back {
+            color: #a5b4fc;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .back:hover {
+            color: white;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 1250px;
+
+            margin: 40px auto 70px;
+        }
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        .difficulty {
+            display: inline-block;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            color: #86efac;
+
+            background: rgba(34,197,94,.10);
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            margin-bottom: 12px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #8996b3;
+
+            font-size: 15px;
+        }
+
+        .practice-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 22px;
+        }
+
+        .panel {
+            padding: 28px;
+
+            border-radius: 20px;
+
+            background:
+                    linear-gradient(
+                            145deg,
+                            rgba(255,255,255,.08),
+                            rgba(255,255,255,.035)
+                    );
+
+            border: 1px solid rgba(255,255,255,.10);
+
+            backdrop-filter: blur(15px);
+        }
+
+        .panel h2 {
+            font-size: 20px;
+
+            margin-bottom: 18px;
+        }
+
+        .description {
+            color: #b8c2d6;
+
+            line-height: 1.7;
+
+            font-size: 14px;
+
+            margin-bottom: 22px;
+        }
+
+        .example {
+            padding: 18px;
+
+            border-radius: 13px;
+
+            background: rgba(0,0,0,.20);
+
+            border: 1px solid rgba(255,255,255,.08);
+
+            margin-bottom: 18px;
+        }
+
+        .example-title {
+            color: #a5b4fc;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            margin-bottom: 9px;
+        }
+
+        .example code {
+            color: #dbeafe;
+
+            font-family: Consolas, monospace;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+        .constraints {
+            color: #8996b3;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+        .tip {
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            color: #a5b4fc;
+
+            background: rgba(99,102,241,.08);
+
+            border: 1px solid rgba(99,102,241,.15);
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+        .editor-label {
+            color: #8996b3;
+
+            font-size: 13px;
+
+            margin-bottom: 10px;
+
+            display: block;
+        }
+
+        textarea {
+            width: 100%;
+
+            min-height: 330px;
+
+            resize: vertical;
+
+            padding: 18px;
+
+            border-radius: 14px;
+
+            border: 1px solid rgba(255,255,255,.12);
+
+            outline: none;
+
+            background: #050816;
+
+            color: #dbeafe;
+
+            font-family: Consolas, Monaco, monospace;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        textarea:focus {
+            border-color: #818cf8;
+
+            box-shadow:
+                    0 0 0 3px
+                    rgba(129,140,248,.12);
+        }
+
+        .buttons {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 15px;
+        }
+
+        .run-btn,
+        .submit-btn {
+            flex: 1;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: .3s;
+        }
+
+        .run-btn {
+            background: rgba(255,255,255,.08);
+
+            border: 1px solid rgba(255,255,255,.12);
+        }
+
+        .submit-btn {
+            background:
+                    linear-gradient(
+                            135deg,
+                            #4f46e5,
+                            #7c3aed
+                    );
+        }
+
+        .run-btn:hover,
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:hover {
+            box-shadow:
+                    0 12px 30px
+                    rgba(99,102,241,.40);
+        }
+
+        .result {
+            display: none;
+
+            margin-top: 18px;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+        .result.success {
+            display: block;
+
+            color: #86efac;
+
+            background: rgba(34,197,94,.10);
+
+            border: 1px solid rgba(34,197,94,.25);
+        }
+
+        .result.error {
+            display: block;
+
+            color: #fca5a5;
+
+            background: rgba(239,68,68,.10);
+
+            border: 1px solid rgba(239,68,68,.25);
+        }
+
+        .result.info {
+            display: block;
+
+            color: #c7d2fe;
+
+            background: rgba(99,102,241,.10);
+
+            border: 1px solid rgba(99,102,241,.20);
+        }
+
+        .stats-preview {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 10px;
+
+            margin-top: 20px;
+        }
+
+        .mini-stat {
+            padding: 14px;
+
+            text-align: center;
+
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.05);
+
+            border: 1px solid rgba(255,255,255,.08);
+        }
+
+        .mini-number {
+            font-size: 20px;
+
+            font-weight: 700;
+
+            margin-bottom: 4px;
+        }
+
+        .mini-label {
+            color: #8996b3;
+
+            font-size: 11px;
+        }
+
+        @media (max-width: 850px) {
+
+            .practice-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            nav {
+                padding: 15px 18px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .container {
+                margin-top: 25px;
+            }
+
+            .panel {
+                padding: 21px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .stats-preview {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+    ```
+
+</head>
+
+<body>
+
+<nav>
+
+    ```
+    <div class="logo">
+        CodeCoach <span>AI</span>
+    </div>
+
+    <a
+            href="dashboard.html"
+            class="back">
+
+        ← Back to Dashboard
+
+    </a>
+    ```
+
+</nav>
+
+<main class="container">
+
+    ```
+    <section class="header">
+
+        <div class="difficulty">
+            EASY
+        </div>
+
+        <h1>
+            Two Sum
+        </h1>
+
+        <p>
+            Find two numbers in an array that add up to a target value.
+        </p>
+
+    </section>
+
+
+    <section class="practice-grid">
+
+
+        <!-- PROBLEM -->
+
+        <div class="panel">
+
+            <h2>
+                Problem
+            </h2>
+
+            <p class="description">
+
+                Given an array of integers
+                <strong>nums</strong> and an integer
+                <strong>target</strong>, return the indices of
+                the two numbers such that they add up to
+                the target.
+
+                <br><br>
+
+                You may assume that each input has exactly
+                one solution.
+
+            </p>
+
+
+            <div class="example">
+
+                <div class="example-title">
+                    Example
+                </div>
+
+                <code>
+                    nums = [2, 7, 11, 15]<br>
+                    target = 9<br><br>
+
+                    Output: [0, 1]
+                </code>
+
+            </div>
+
+
+            <div class="example">
+
+                <div class="example-title">
+                    Explanation
+                </div>
+
+                <code>
+                    nums[0] + nums[1]<br>
+                    = 2 + 7<br>
+                    = 9
+                </code>
+
+            </div>
+
+
+            <div class="constraints">
+
+                <strong>Constraints:</strong><br>
+
+                • 2 ≤ nums.length ≤ 10⁴<br>
+                • -10⁹ ≤ nums[i] ≤ 10⁹<br>
+                • -10⁹ ≤ target ≤ 10⁹
+
+            </div>
+
+
+            <div class="tip">
+
+                💡 Tip: Think about how a HashMap could
+                help you find the required number quickly.
+
+            </div>
+
+        </div>
+
+
+        <!-- EDITOR -->
+
+        <div class="panel">
+
+            <h2>
+                Write Your Solution
+            </h2>
+
+            <label class="editor-label">
+                Java
+            </label>
+
+
+            <textarea
+                    id="codeEditor"
+                    spellcheck="false">import java.util.*;
+```
+
+class Solution {
+
+```
+public int[] twoSum(int[] nums, int target) {
+
+    // Write your solution here
+
+    return new int[]{};
+
+}
+```
+
+}</textarea>
+
+            ```
+            <div class="buttons">
+
+                <button
+                        class="run-btn"
+                        onclick="runCode()">
+
+                    ▶ Run
+
+                </button>
+
+
+                <button
+                        class="submit-btn"
+                        onclick="submitSolution()">
+
+                    ✓ Submit
+
+                </button>
+
+            </div>
+
+
+            <div
+                    id="result"
+                    class="result">
+            </div>
+
+
+            <div class="stats-preview">
+
+                <div class="mini-stat">
+
+                    <div
+                            class="mini-number"
+                            id="miniSolved">
+                        0
+                    </div>
+
+                    <div class="mini-label">
+                        Solved
+                    </div>
+
+                </div>
+
+
+                <div class="mini-stat">
+
+                    <div
+                            class="mini-number"
+                            id="miniPoints">
+                        0
+                    </div>
+
+                    <div class="mini-label">
+                        Points
+                    </div>
+
+                </div>
+
+
+                <div class="mini-stat">
+
+                    <div
+                            class="mini-number"
+                            id="miniProgress">
+                        0%
+                    </div>
+
+                    <div class="mini-label">
+                        Progress
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+    ```
+
+</main>
+
+<script>
+
+
+    /*
+     * ==========================================
+     * DEMO USER STATS
+     * ==========================================
+     *
+     * Abhi database connected nahi hai.
+     *
+     * Isliye localStorage use kar rahe hain.
+     *
+     * Jab backend/database connect hoga,
+     * isi jagah API call aayegi.
+     */
+
+
+    const TOTAL_PROBLEMS = 35;
+
+    const POINTS_PER_PROBLEM = 50;
+
+
+    function getStats() {
+
+        const saved =
+            localStorage.getItem(
+                "codecoachStats"
+            );
+
+
+        if (saved) {
+
+            try {
+
+                return JSON.parse(saved);
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Stats reset."
+                );
+
+            }
+
+        }
+
+
+        return {
+
+            solved: 0,
+
+            streak: 0,
+
+            points: 0,
+
+            progress: 0,
+
+            activity: []
+
+        };
+
+    }
+
+
+    function saveStats(stats) {
+
+        localStorage.setItem(
+            "codecoachStats",
+            JSON.stringify(stats)
+        );
+
+    }
+
+
+    function updateMiniStats() {
+
+        const stats = getStats();
+
+
+        document
+            .getElementById("miniSolved")
+            .innerText =
+            stats.solved;
+
+
+        document
+            .getElementById("miniPoints")
+            .innerText =
+            stats.points;
+
+
+        document
+            .getElementById("miniProgress")
+            .innerText =
+            stats.progress + "%";
+
+    }
+
+
+    function runCode() {
+
+        const result =
+            document.getElementById(
+                "result"
+            );
+
+
+        result.className =
+            "result info";
+
+
+        result.innerText =
+            "▶ Code run requested. Actual Java execution backend se connect hone ke baad hoga.";
+
+    }
+
+
+    function submitSolution() {
+
+        const code =
+            document
+                .getElementById("codeEditor")
+                .value
+                .trim();
+
+
+        const result =
+            document.getElementById(
+                "result"
+            );
+
+
+        if (!code) {
+
+            result.className =
+                "result error";
+
+            result.innerText =
+                "❌ Please write your solution first.";
+
+            return;
+
+        }
+
+
+        /*
+         * DEMO CHECK
+         *
+         * Abhi real Java compiler nahi hai.
+         *
+         * Testing ke liye check kar rahe hain
+         * ki user ne editor mein code change kiya.
+         */
+
+
+        if (
+            code.includes(
+                "return new int[]{};"
+            )
+        ) {
+
+            result.className =
+                "result error";
+
+            result.innerText =
+                "❌ Please write a solution before submitting.";
+
+            return;
+
+        }
+
+
+        const stats =
+            getStats();
+
+
+        /*
+         * Same problem dobara solve karne par
+         * stats dobara increase nahi honge.
+         */
+
+        const alreadySolved =
+            stats.activity.some(
+                function(item) {
+
+                    return item.problem ===
+                        "Two Sum";
+
+                }
+            );
+
+
+        if (alreadySolved) {
+
+            result.className =
+                "result info";
+
+            result.innerText =
+                "ℹ️ Two Sum is already marked as solved.";
+
+            updateMiniStats();
+
+            return;
+
+        }
+
+
+        /*
+         * UPDATE STATS
+         */
+
+        stats.solved += 1;
+
+        stats.points +=
+            POINTS_PER_PROBLEM;
+
+
+        stats.progress =
+            Math.min(
+                100,
+                Math.round(
+                    (stats.solved /
+                        TOTAL_PROBLEMS) * 100
+                )
+            );
+
+
+        /*
+         * First solve par streak = 1
+         */
+
+        if (stats.streak === 0) {
+
+            stats.streak = 1;
+
+        }
+
+
+        /*
+         * ACTIVITY
+         */
+
+        stats.activity.unshift({
+
+            problem: "Two Sum",
+
+            type: "solved",
+
+            points: POINTS_PER_PROBLEM,
+
+            time:
+                new Date().toLocaleString()
+
+        });
+
+
+        /*
+         * Sirf latest 10 activities rakhenge.
+         */
+
+        stats.activity =
+            stats.activity.slice(0, 10);
+
+
+        saveStats(stats);
+
+
+        updateMiniStats();
+
+
+        result.className =
+            "result success";
+
+
+        result.innerText =
+            "🎉 Correct! Two Sum solved successfully. +" +
+            POINTS_PER_PROBLEM +
+            " points added.";
+
+    }
+
+
+    /*
+     * Page load
+     */
+
+    updateMiniStats();
+
+
+</script>
+
+</body>
+
+</html>

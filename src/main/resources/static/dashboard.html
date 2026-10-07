@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | CodeCoach AI</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:Arial,Helvetica,sans-serif;min-height:100vh;color:white;background:radial-gradient(circle at 10% 10%,rgba(99,102,241,.18),transparent 25%),radial-gradient(circle at 90% 20%,rgba(168,85,247,.16),transparent 25%),#070b18}
+        nav{width:94%;max-width:1250px;margin:20px auto;padding:17px 24px;display:flex;justify-content:space-between;align-items:center;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(20px)}
+        .logo{font-size:23px;font-weight:700}.logo span,.welcome h1 span{background:linear-gradient(90deg,#60a5fa,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .nav-right{display:flex;align-items:center;gap:15px}.user{color:#a5b4fc;font-size:14px}.logout{padding:9px 15px;border-radius:9px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#cbd5e1;cursor:pointer;transition:.3s}.logout:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
+        .container{width:94%;max-width:1250px;margin:45px auto 80px}.welcome{margin-bottom:35px}.welcome h1{font-size:38px;margin-bottom:10px}.welcome p{color:#8996b3;font-size:16px}
+        .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:40px}.stat-card{padding:24px;border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.10);transition:.3s}.stat-card:hover{transform:translateY(-5px);border-color:rgba(129,140,248,.35)}.stat-icon{font-size:25px;margin-bottom:15px}.stat-number{font-size:28px;font-weight:700;margin-bottom:5px}.stat-label{color:#8996b3;font-size:13px}
+        .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.section-title h2{font-size:22px}.explore-btn{border:none;background:transparent;color:#818cf8;font-size:13px;font-weight:600;cursor:pointer;padding:8px 4px;transition:.3s}.explore-btn:hover{color:#a78bfa;transform:translateX(4px)}
+        .problems{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:40px}.problem-card{padding:25px;border-radius:18px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.10);transition:.3s;position:relative}.problem-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.25)}.problem-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.difficulty{padding:6px 10px;border-radius:20px;font-size:11px;font-weight:600}.easy{color:#86efac;background:rgba(34,197,94,.10)}.medium{color:#facc15;background:rgba(234,179,8,.10)}.hard{color:#fca5a5;background:rgba(239,68,68,.10)}.problem-card h3{font-size:18px;margin-bottom:10px}.problem-card p{color:#8996b3;font-size:13px;line-height:1.6;margin-bottom:20px}.solve-btn{width:100%;padding:11px;border:none;border-radius:10px;color:white;background:linear-gradient(135deg,#4f46e5,#7c3aed);cursor:pointer;font-weight:600;transition:.3s}.solve-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(99,102,241,.35)}.solve-btn.solved{background:linear-gradient(135deg,#15803d,#16a34a)}
+        .solved-badge{display:none;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;color:#86efac;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.18);font-size:11px;font-weight:700}.problem-card.is-solved .solved-badge{display:inline-flex}
+        .bottom-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:20px}.panel{padding:25px;border-radius:20px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.10)}
+        .progress-header{display:flex;justify-content:space-between;margin-bottom:15px}.progress-header span{color:#8996b3;font-size:13px}.progress-bar{height:9px;border-radius:20px;background:rgba(255,255,255,.08);overflow:hidden;margin-bottom:12px}.progress-fill{width:0;height:100%;border-radius:20px;background:linear-gradient(90deg,#4f46e5,#a855f7);transition:width .5s ease}.progress-text{color:#8996b3;font-size:13px}
+        .activity-list{display:flex;flex-direction:column;gap:10px;max-height:250px;overflow:auto}.activity-item{padding:11px 12px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.03)}.activity-item strong{display:block;font-size:13px;margin-bottom:4px}.activity-item span{font-size:11px;color:#71809d}.empty-activity{padding:30px 10px;text-align:center;color:#68758f;font-size:14px}.empty-icon{font-size:30px;margin-bottom:10px;opacity:.7}
+        @media(max-width:950px){.stats{grid-template-columns:repeat(2,1fr)}.problems{grid-template-columns:1fr}.bottom-grid{grid-template-columns:1fr}}@media(max-width:550px){.nav-right .user{display:none}.welcome h1{font-size:30px}.stats{grid-template-columns:1fr 1fr}.container{margin-top:30px}nav{padding:14px 16px}.logo{font-size:20px}.section-title h2{font-size:19px}.explore-btn{font-size:12px}}
+
+        .problem-solved { border-color: rgba(34,197,94,.28); }
+        .solved-badge { padding:5px 9px; border-radius:20px; font-size:10px; font-weight:700; color:#86efac; background:rgba(34,197,94,.10); border:1px solid rgba(34,197,94,.18); }
+        .solved-button { background:linear-gradient(135deg,#15803d,#16a34a); }
+        .solved-button:hover { box-shadow:0 8px 25px rgba(34,197,94,.25); }
+        .activity-item { padding:13px; border-radius:12px; background:rgba(34,197,94,.07); border:1px solid rgba(34,197,94,.14); }
+
+    </style>
+</head>
+<body>
+<nav><div class="logo">CodeCoach <span>AI</span></div><div class="nav-right"><div class="user" id="navUser">👋 Welcome, Developer</div><button class="logout" onclick="logout()">Logout</button></div></nav>
+<main class="container">
+    <section class="welcome"><h1>Welcome back, <span id="welcomeUser">Developer 🚀</span></h1><p>Keep practicing and become a stronger programmer.</p></section>
+    <section class="stats">
+        <div class="stat-card"><div class="stat-icon">💻</div><div class="stat-number" id="solvedCount">0</div><div class="stat-label">Problems Solved</div></div>
+        <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-number" id="streakCount">0</div><div class="stat-label">Day Streak</div></div>
+        <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-number" id="pointsCount">0</div><div class="stat-label">Total Points</div></div>
+        <div class="stat-card"><div class="stat-icon">📈</div><div class="stat-number" id="progressCount">0%</div><div class="stat-label">Progress</div></div>
+    </section>
+    <div class="section-title"><h2>Coding Practice</h2><button class="explore-btn" onclick="openAllProblems()">Explore Problems →</button></div>
+    <section class="problems">
+        <div class="problem-card" id="card-twoSum"><div class="problem-top"><span>💡</span><span class="difficulty easy">EASY</span></div><h3>Two Sum</h3><p>Find two numbers in an array that add up to a target value.</p><div class="solved-badge">✓ Solved</div><button class="solve-btn" id="btn-twoSum" onclick="startProblem('twoSum')">Solve Problem →</button></div>
+        <div class="problem-card" id="card-longestSubstring"><div class="problem-top"><span>🧠</span><span class="difficulty medium">MEDIUM</span></div><h3>Longest Substring</h3><p>Find the longest substring without repeating characters.</p><div class="solved-badge">✓ Solved</div><button class="solve-btn" id="btn-longestSubstring" onclick="startProblem('longestSubstring')">Solve Problem →</button></div>
+        <div class="problem-card" id="card-mergeKLists"><div class="problem-top"><span>⚡</span><span class="difficulty hard">HARD</span></div><h3>Merge K Lists</h3><p>Merge multiple sorted linked lists into one sorted list.</p><div class="solved-badge">✓ Solved</div><button class="solve-btn" id="btn-mergeKLists" onclick="startProblem('mergeKLists')">Solve Problem →</button></div>
+    </section>
+    <section class="bottom-grid">
+        <div class="panel"><div class="section-title"><h2>Your Progress</h2><span id="progressPercent">0%</span></div><div class="progress-header"><span>Coding Journey</span><span id="progressNumbers">0 / 50</span></div><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><div class="progress-text" id="progressText">Start solving problems to build your coding progress. 🚀</div></div>
+        <div class="panel"><div class="section-title"><h2>Recent Activity</h2></div><div id="activityContainer" class="empty-activity"><div class="empty-icon">📋</div><div>No activity yet.</div><div style="margin-top:6px;font-size:12px;color:#56627a;">Solve your first problem to see activity here.</div></div></div>
+    </section>
+</main>
+<script>
+    const TOTAL_PROBLEMS = 50;
+    const META = {
+        "Two Sum": {key:"twoSum", icon:"💡", difficulty:"EASY", cls:"easy", desc:"Find two numbers in an array that add up to a target value."},
+        "Longest Substring": {key:"longestSubstring", icon:"🧠", difficulty:"MEDIUM", cls:"medium", desc:"Find the longest substring without repeating characters."},
+        "Merge K Lists": {key:"mergeKLists", icon:"⚡", difficulty:"HARD", cls:"hard", desc:"Merge multiple sorted linked lists into one sorted list."}
+    };
+    function userKey(){try{const u=JSON.parse(localStorage.getItem('codecoachUser')||'{}');return String(u.email||u.id||u.username||u.name||'guest').trim().toLowerCase()||'guest'}catch(e){return 'guest'}}
+    function solvedKey(){return 'codecoachSolved_'+userKey()}
+    function activityKey(){return 'codecoachActivity_'+userKey()}
+    function getSolved(){try{const x=JSON.parse(localStorage.getItem(solvedKey())||'[]');return Array.isArray(x)?[...new Set(x.map(String))]:[]}catch(e){return []}}
+    function getActivity(){try{const x=JSON.parse(localStorage.getItem(activityKey())||'[]');return Array.isArray(x)?x:[]}catch(e){return []}}
+    function streak(){const a=getActivity(), days=new Set();a.forEach(x=>{if(x&&x.timestamp){const d=new Date(x.timestamp);if(!isNaN(d))days.add(d.toLocaleDateString('en-CA'))}});let d=new Date();d=new Date(d.getFullYear(),d.getMonth(),d.getDate());let n=0;while(days.has(d.toLocaleDateString('en-CA'))){n++;d.setDate(d.getDate()-1)}return n}
+    function loadDashboard(){
+        const solved=getSolved(), count=solved.length, progress=Math.round(count/TOTAL_PROBLEMS*100), points=count*10;
+        document.getElementById('solvedCount').innerText=count;
+        document.getElementById('streakCount').innerText=streak();
+        document.getElementById('pointsCount').innerText=points;
+        document.getElementById('progressCount').innerText=progress+'%';
+        document.getElementById('progressPercent').innerText=progress+'%';
+        document.getElementById('progressFill').style.width=progress+'%';
+        document.getElementById('progressNumbers').innerText=count+' / '+TOTAL_PROBLEMS;
+        renderProblems(solved); renderActivity();
+        const t=document.querySelector('.progress-text'); if(t)t.innerText=count===0?'Start solving problems to build your coding progress. 🚀':count===50?'🎉 Amazing! You solved all 50 problems!':count+' problem'+(count===1?'':'s')+' solved. Keep going! 🚀';
+    }
+    function renderProblems(solved){const c=document.querySelector('.problems');if(!c)return;c.innerHTML=Object.entries(META).map(([title,m])=>{const ok=solved.includes(m.key);return `<div class="problem-card ${ok?'problem-solved':''}"><div class="problem-top"><span>${m.icon}</span><div style="display:flex;align-items:center;gap:8px;">${ok?'<span class="solved-badge">✓ SOLVED</span>':''}<span class="difficulty ${m.cls}">${m.difficulty}</span></div></div><h3>${title}</h3><p>${m.desc}</p><button class="solve-btn ${ok?'solved-button':''}" onclick="startProblem('${title}')">${ok?'✓ Solved — Practice Again':'Solve Problem →'}</button></div>`}).join('')}
+    function renderActivity(){const panel=document.querySelector('.bottom-grid .panel:last-child');if(!panel)return;const a=getActivity().filter(x=>x&&x.status==='ACCEPTED').slice(0,5);panel.innerHTML='<div class="section-title"><h2>Recent Activity</h2></div>'+(!a.length?'<div class="empty-activity"><div class="empty-icon">📋</div><div>No activity yet.</div><div style="margin-top:6px;font-size:12px;color:#56627a;">Solve your first problem to see activity here.</div></div>':'<div style="display:flex;flex-direction:column;gap:12px;">'+a.map(x=>{const d=x.timestamp?new Date(x.timestamp):null;const time=d&&!isNaN(d)?d.toLocaleString():'';return `<div class="activity-item"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;"><strong style="font-size:14px;">✓ ${x.problem||'Problem'}</strong><span style="color:#86efac;font-size:11px;font-weight:700;">ACCEPTED</span></div><div style="margin-top:6px;color:#68758f;font-size:11px;">${x.language||'Code'}${time?' • '+time:''}</div></div>`}).join('')+'</div>')}
+    function loadUser(){const raw=localStorage.getItem('codecoachUser');if(!raw)return;try{const u=JSON.parse(raw),name=u.name||u.email||'Developer';document.getElementById('welcomeUser').innerText=name+' 🚀';document.getElementById('navUser').innerText='👋 Welcome, '+name}catch(e){}}
+    function openAllProblems(){location.href='practice.html'}
+    function startProblem(problem){location.href='practice.html?problem='+((META[problem]||META['Two Sum']).key)}
+    function logout(){localStorage.removeItem('codecoachUser');location.href='index.html'}
+    window.addEventListener('storage',e=>{if(e.key===solvedKey()||e.key===activityKey())loadDashboard()});
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadDashboard()});
+    loadDashboard();loadUser();
+</script>
+</body>
+</html>
